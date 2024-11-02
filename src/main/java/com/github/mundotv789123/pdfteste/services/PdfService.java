@@ -3,15 +3,17 @@ package com.github.mundotv789123.pdfteste.services;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.github.mundotv789123.pdfteste.models.PdfDataModel;
+import com.itextpdf.html2pdf.ConverterProperties;
+import com.itextpdf.html2pdf.HtmlConverter;
+import com.itextpdf.html2pdf.resolver.font.DefaultFontProvider;
+import com.itextpdf.layout.font.FontProvider;
 
 @Service
 public class PdfService {
@@ -44,14 +46,13 @@ public class PdfService {
         String html = this.viewHtmlTemplate(data);
 
         File outputFile = new File(dir, fileName);
-        OutputStream outputStream = new FileOutputStream(outputFile);
 
-        ITextRenderer renderer = new ITextRenderer();
-        renderer.setDocumentFromString(html);
-        renderer.layout();
-        renderer.createPDF(outputStream);
+        FontProvider fontProvider = new DefaultFontProvider(true, true, true);
 
-        outputStream.close();
+        var converterProperties = new ConverterProperties();
+        converterProperties.setFontProvider(fontProvider);
+
+        HtmlConverter.convertToPdf(html, new FileOutputStream(outputFile), converterProperties);
         return outputFile;
     }
 }
