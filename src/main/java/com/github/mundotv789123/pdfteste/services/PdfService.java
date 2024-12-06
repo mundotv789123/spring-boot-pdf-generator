@@ -52,6 +52,8 @@ public class PdfService {
         var converterProperties = new ConverterProperties();
         converterProperties.setFontProvider(fontProvider);
 
+        converterProperties.setBaseUri("http://localhost:8080");
+
         HtmlConverter.convertToPdf(html, new FileOutputStream(outputFile), converterProperties);
         return outputFile;
     }
