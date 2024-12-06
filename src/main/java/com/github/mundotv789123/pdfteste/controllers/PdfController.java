@@ -31,7 +31,7 @@ public class PdfController {
         java.util.List<PdfDataRowModel> rows = new ArrayList<PdfDataRowModel>();
         rows.add(new PdfDataRowModel(1, "Item exemplo"));
         rows.add(new PdfDataRowModel(1, "Item exemplo2"));
-        this.data = new PdfDataModel(1, "teste", "teste@gmail.com", "21999999999", null, rows);
+        this.data = new PdfDataModel(1, "teste", "teste@gmail.com", "21999999999", rows);
     }
 
     @GetMapping("/view")

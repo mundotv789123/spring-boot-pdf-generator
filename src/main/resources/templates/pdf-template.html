@@ -86,28 +86,28 @@
       <tr>
         <td>Id: </td>
         <b>
-          <td th:text="${data.id}"></td>
+          <td th:text="${model.id}"></td>
         </b>
       </tr>
       <tr>
         <td>Nome: </td>
         <b>
-          <td th:text="${data.nome}"></td>
+          <td th:text="${model.nome}"></td>
         </b>
       </tr>
       <tr>
         <td>Email: </td>
         <b>
-          <td th:text="${data.email}"></td>
+          <td th:text="${model.email}"></td>
         </b>
       </tr>
       <tr>
         <td>Telefone: </td>
         <b>
-          <td th:text="${data.getFormatedTelefone()}"></td>
+          <td th:text="${model.getFormatedTelefone()}"></td>
         </b>
       </tr>
-      <tr style="color: red;" th:if="${data.obs != null}">
+      <tr style="color: red;" th:if="${model.obs != null}">
         <td>Obs: </td>
         <b>
           <td th:text="${data.obs}"></td>
@@ -115,7 +115,7 @@
       </tr>
     </table>
 
-    <div th:if="${!data.rows.empty}">
+    <div th:if="${!model.rows.empty}">
       <h3>Lista de itens</h3>
       <table class="table-border">
         <thead>
@@ -125,7 +125,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr th:each="row: ${data.rows}">
+          <tr th:each="row: ${model.rows}">
             <td th:text="${row.id}"></td>
             <td th:text="${row.nome}"></td>
           </tr>

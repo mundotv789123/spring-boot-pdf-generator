@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import com.github.mundotv789123.pdfteste.models.PdfDataModel;
+import com.github.mundotv789123.pdfteste.models.AbstractModel;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.html2pdf.resolver.font.DefaultFontProvider;
@@ -27,15 +27,15 @@ public class PdfService {
         this.templateEngine = templateEngine;
     }
 
-    public String viewHtmlTemplate(PdfDataModel data) {
+    public<T extends AbstractModel> String viewHtmlTemplate(T model) {
         Context context = new Context();
-        context.setVariable("data", data);
-        String html = templateEngine.process("pdf-template", context);
+        context.setVariable("model", model);
+        String html = templateEngine.process(model.getTemplatePath(), context);
 
         return html;
     }
 
-    public File generatePdf(PdfDataModel data, String fileName) throws IOException {
+    public<T extends AbstractModel> File generatePdf(T model, String fileName) throws IOException {
         File dir = new File(this.dirName);
 
         if (!dir.exists())
@@ -43,7 +43,7 @@ public class PdfService {
         else if(!dir.isDirectory())
             throw new RuntimeException("dirname is not a directory");
 
-        String html = this.viewHtmlTemplate(data);
+        String html = this.viewHtmlTemplate(model);
 
         File outputFile = new File(dir, fileName);
 
